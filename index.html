@@ -1,1 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المتجر الشامل | ويندوز سيرفر</title>
+    <style>
+        /* ========== CSS ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        :root {
+            --primary: #0a2f44;
+            --secondary: #1e5f74;
+            --accent: #f5b042;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        body {
+            background: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            width: 90%;
+            max-width: 1300px;
+            margin: 2rem auto;
+        }
+        .btn {
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 1rem;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-sm {
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+        }
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        .btn-accent:hover {
+            background: #e09c2f;
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 400;
+        }
+        .logo span {
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(245,176,66,0.2);
+        }
+        /* صفحة تسجيل الدخول */
+        .login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f0f2f5;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+        }
+        .login-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+        .login-box h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+        .divider::before { right: 0; }
+        .divider::after { left: 0; }
+        .message {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .message.error {
+            background: #ffe6e6;
+            color: var(--danger);
+        }
+        .message.success {
+            background: #d4edda;
+            color: var(--success);
+        }
+        /* شبكة المنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .product-img {
+            height: 200px;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+        }
+        .product-info {
+            padding: 1.5rem;
+            flex: 1;
+        }
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .product-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .product-actions button {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn-add {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-add:hover {
+            background: var(--secondary);
+        }
+        /* لوحة التحكم */
+        .admin-tabs {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+        .tab-link {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: var(--gray);
+            font-weight: 600;
+            transition: var(--transition);
+            border-radius: 30px;
+        }
+        .tab-link.active {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .admin-table th,
+        .admin-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .admin-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        .admin-table tr:hover {
+            background: #f9f9f9;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 0 0.3rem;
+            transition: var(--transition);
+        }
+        .action-btn.edit:hover { color: var(--secondary); }
+        .action-btn.delete:hover { color: var(--danger); }
+        /* النوافذ المنبثقة */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            max-height: 85vh;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-header h2 {
+            color: var(--primary);
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        .close-modal:hover {
+            color: var(--danger);
+        }
+        /* السلة */
+        .cart-items {
+            list-style: none;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .cart-item-img {
+            width: 60px;
+            height: 60px;
+            background: #e9ecef;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        .cart-item-info {
+            flex: 1;
+        }
+        .cart-item-title {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .cart-item-price {
+            color: var(--accent);
+        }
+        .cart-footer {
+            margin-top: 2rem;
+            border-top: 2px solid #eee;
+            padding-top: 1rem;
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 2000;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+        /* أقسام الصفحة */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- الصفحات المخفية / نعرض واحدة حسب الحالة -->
+    <!-- صفحة تسجيل الدخول -->
+    <div id="loginPage" class="page active">
+        <div class="login-page">
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="logo" style="text-align: center; margin-bottom: 1.5rem;">
+                        <h1>🛍️ <span>متجري</span></h1>
+                    </div>
+                    <h2>تسجيل الدخول</h2>
+                    <p>الدخول كضيف أو باستخدام حساب </p>
+                    <button class="btn btn-primary btn-block" id="guestLogin">دخول كضيف</button>
+                    <div class="divider">أو</div>
+                    <form id="adminLoginForm">
+                        <div class="form-group">
+                            <label for="username">اسم المستخدم</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">كلمة المرور</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-accent btn-block">دخول </button>
+                    </form>
+                    <div id="loginMessage" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- صفحة المتجر (للزبائن) -->
+    <div id="storePage" class="page">
+        <header>
+            <div class="logo">
+                <h1>🛍️ <span>متجري</span></h1>
+            </div>
+            <div class="user-info">
+                <span id="userDisplay"></span>
+                <button class="btn btn-sm" id="logoutBtnStore">تسجيل خروج</button>
+                <button class="btn btn-sm" id="cartIconStore">🛒 السلة <span id="cartCountStore">0</span></button>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <h2 class="section-title">جميع المنتجات</h2>
+                <div class="products-grid" id="productsContainer"></div>
+            </div>
+        </main>
+        <!-- نافذة السلة -->
+        <div class="modal" id="cartModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🛒 سلة التسوق</h2>
+                    <button class="close-modal" id="closeCart">&times;</button>
+                </div>
+                <div id="cartContent">
+                    <ul class="cart-items" id="cartItemsList"></ul>
+                    <div class="cart-footer">
+                        <div class="cart-total">
+                            <span>الإجمالي:</span>
+                            <span id="cartTotal">$0.00</span>
+                        </div>
+                        <button class="btn btn-primary btn-block" id="checkoutBtn">إتمام الشراء</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            جميع الحقوق محفوظة © 2025
+        </footer>
+    </div>
+
+    <!-- صفحة لوحة التحكم (للأدمن) -->
+    <div id="adminPage" class="page">
+        <header>
+            <div class="logo">
+                <h1>⚙️ لوحة التحكم</h1>
+            </div>
+            <div class="user-info">
+                <span>مرحباً <span id="adminName"></span></span>
+                <button class="btn btn-sm" id="logoutBtnAdmin">تسجيل خروج</button>
+            </div>
+        </header>
+        <div class="admin-tabs">
+            <button class="tab-link active" data-tab="products">إدارة المنتجات</button>
+            <button class="tab-link" data-tab="users">إدارة المستخدمين</button>
+        </div>
+        <!-- تبويب المنتجات -->
+        <div id="productsTab" class="tab-content active">
+            <div class="container">
+                <div class="admin-header">
+                    <h2>المنتجات</h2>
+                    <button class="btn btn-primary" id="addProductBtn">+ إضافة منتج</button>
+                </div>
+                <table class="admin-table" id="productsTable">
+                    <thead>
+                        <tr><th>ID</th><th>صورة</th><th>الاسم</th><th>السعر</th><th>الوصف</th><th>إجراءات</th></tr>
+                    </thead>
+                    <tbody id="productsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- تبويب المستخدمين -->
+        <div id="usersTab" class="tab-content">
+            <div class="container">
+                <div class="admin-header">
+                    <h2>المستخدمون</h2>
+                    <button class="btn btn-primary" id="addUserBtn">+ إضافة مستخدم</button>
+                </div>
+                <table class="admin-table" id="usersTable">
+                    <thead>
+                        <tr><th>ID</th><th>اسم المستخدم</th><th>الدور</th><th>إجراءات</th></tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- نوافذ المنتج -->
+        <div class="modal" id="productModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="productModalTitle">إضافة منتج</h2>
+                    <button class="close-modal" id="closeProductModal">&times;</button>
+                </div>
+                <form id="productForm">
+                    <input type="hidden" id="productId">
+                    <div class="form-group">
+                        <label for="productName">اسم المنتج</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">السعر ($)</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDesc">الوصف</label>
+                        <textarea id="productDesc" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">الصورة (رمز أو رابط)</label>
+                        <input type="text" id="productImage" required>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="productFeatured"> منتج مميز</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">حفظ</button>
+                </form>
+            </div>
+        </div>
+        <!-- نافذة المستخدم -->
+        <div class="modal" id="userModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="userModalTitle">إضافة مستخدم</h2>
+                    <button class="close-modal" id="closeUserModal">&times;</button>
+                </div>
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    <div class="form-group">
+                        <label for="username2">اسم المستخدم</label>
+                        <input type="text" id="username2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password2">كلمة المرور</label>
+                        <input type="password" id="password2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">الدور</label>
+                        <select id="role">
+                            <option value="admin">أدمن</option>
+                            <option value="editor">محرر</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">حفظ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- عنصر Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // ========== JavaScript الموحد ==========
+        (function() {
+            // ----- ثوابت التخزين -----
+            const STORAGE_KEYS = {
+                PRODUCTS: 'store_products',
+                USERS: 'store_users',
+                CURRENT_USER: 'store_current_user',
+                CART: 'store_cart'
+            };
+
+            // ----- بيانات افتراضية -----
+            const defaultProducts = [
+                { id: 1, name: 'لاب توب احترافي', price: 899, desc: 'معالج Intel i7، رام 16GB، SSD 512GB', image: '💻', featured: true },
+                { id: 2, name: 'هاتف ذكي', price: 699, desc: 'شاشة AMOLED 6.7"، كاميرا 108MP', image: '📱', featured: true },
+                { id: 3, name: 'سماعات لاسلكية', price: 199, desc: 'عزل ضوضاء، بطارية 30 ساعة', image: '🎧', featured: false },
+                { id: 4, name: 'ساعة ذكية', price: 249, desc: 'مراقبة النوم، نبضات القلب', image: '⌚', featured: true },
+                { id: 5, name: 'تابلت', price: 449, desc: 'شاشة 11 بوصة، 128GB', image: '📲', featured: false },
+                { id: 6, name: 'ماوس ألعاب', price: 79, desc: 'DPI 16000، أزرار قابلة للتخصيص', image: '🖱️', featured: false }
+            ];
+            const defaultUsers = [
+                { id: 1, username: 'admin', password: 'admin123', role: 'admin' },
+                { id: 2, username: 'editor', password: 'editor123', role: 'editor' }
+            ];
+
+            // ----- تهيئة التخزين -----
+            function initializeStorage() {
+                if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) {
+                    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(defaultProducts));
+                }
+                if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
+                    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(defaultUsers));
+                }
+                if (!localStorage.getItem(STORAGE_KEYS.CART)) {
+                    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify([]));
+                }
+            }
+
+            // ----- دوال المنتجات -----
+            function getProducts() {
+                return JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS)) || [];
+            }
+            function saveProducts(products) {
+                localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+            }
+            function addProduct(product) {
+                const products = getProducts();
+                const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                product.id = newId;
+                products.push(product);
+                saveProducts(products);
+                return product;
+            }
+            function updateProduct(updatedProduct) {
+                const products = getProducts();
+                const index = products.findIndex(p => p.id === updatedProduct.id);
+                if (index !== -1) {
+                    products[index] = updatedProduct;
+                    saveProducts(products);
+                    return true;
+                }
+                return false;
+            }
+            function deleteProduct(productId) {
+                let products = getProducts();
+                products = products.filter(p => p.id !== productId);
+                saveProducts(products);
+            }
+
+            // ----- دوال المستخدمين -----
+         function getUsers() {
+                return JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS)) || [];
+            }
+            function saveUsers(users) {
+                localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+            }
+            function addUser(user) {
+                const users = getUsers();
+                const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+                user.id = newId;
+                users.push(user);
+                saveUsers(users);
+                return user;
+            }
+            function updateUser(updatedUser) {
+                const users = getUsers();
+                const index = users.findIndex(u => u.id === updatedUser.id);
+                if (index !== -1) {
+                    users[index] = updatedUser;
+                    saveUsers(users);
+                    return true;
+                }
+                return false;
+            }
+            function deleteUser(userId) {
+                let users = getUsers();
+                users = users.filter(u => u.id !== userId);
+                saveUsers(users);
+            }
+            function findUserByUsername(username) {
+                const users = getUsers();
+                return users.find(u => u.username === username);
+            }
+
+            // ----- دوال الجلسة -----
+            function setCurrentUser(user) {
+                if (user) {
+                    sessionStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
+                } else {
+                    sessionStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+                }
+            }
+            function getCurrentUser() {
+                const userStr = sessionStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+                return userStr ? JSON.parse(userStr) : null;
+            }
+            function logout() {
+                sessionStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+                showPage('login');
+            }
+
+            // ----- دوال السلة -----
+            function getCart() {
+                return JSON.parse(localStorage.getItem(STORAGE_KEYS.CART)) || [];
+            }
+            function saveCart(cart) {
+                localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
+            }
+            function addToCart(product) {
+                const cart = getCart();
+                const existing = cart.find(item => item.id === product.id);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                saveCart(cart);
+            }
+            function removeFromCart(productId) {
+                let cart = getCart();
+                cart = cart.filter(item => item.id !== productId);
+                saveCart(cart);
+            }
+            function updateCartQuantity(productId, delta) {
+                const cart = getCart();
+                const item = cart.find(i => i.id === productId);
+                if (item) {
+                    item.quantity += delta;
+                    if (item.quantity <= 0) {
+                        removeFromCart(productId);
+                    } else {
+                        saveCart(cart);
+                    }
+                }
+            }
+            function clearCart() {
+                saveCart([]);
+            }
+
+            // ----- Toast -----
+            function showToast(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.style.background = type === 'success' ? '#28a745' : '#dc3545';
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            }
+
+            
+            // ----- التحكم بالصفحات -----
+            function showPage(pageId) {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(pageId + 'Page').classList.add('active');
+            }
+
+            // ----- تهيئة الصفحة بناءً على المستخدم -----
+            function renderApp() {
+                initializeStorage();
+                const user = getCurrentUser();
+                if (!user) {
+                    showPage('login');
+                    setupLoginPage();
+                } else if (user.role === 'guest' || user.role === 'editor' || user.role === 'admin') {
+                    if (user.role === 'admin' || user.role === 'editor') {
+                        showPage('admin');
+                        setupAdminPage(user);
+                    } else {
+                        showPage('store');
+                        setupStorePage(user);
+                    }
+                } else {
+                    // حالة غير متوقعة
+                    setCurrentUser(null);
+                    showPage('login');
+                    setupLoginPage();
+                }
+            }
+
+            // ----- إعداد صفحة تسجيل الدخول -----
+            function setupLoginPage() {
+                document.getElementById('guestLogin').onclick = () => {
+                    setCurrentUser({ role: 'guest', name: 'ضيف' });
+                    renderApp();
+                };
+                document.getElementById('adminLoginForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    const username = document.getElementById('username').value.trim();
+                    const password = document.getElementById('password').value;
+                    const user = findUserByUsername(username);
+                    const msgDiv = document.getElementById('loginMessage');
+                    if (user && user.password === password) {
+                        setCurrentUser({ id: user.id, username: user.username, role: user.role });
+                        renderApp();
+                    } else {
+                        msgDiv.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+                        msgDiv.className = 'message error';
+                    }
+                };
+            }
+
+            // ----- إعداد صفحة المتجر -----
+            function setupStorePage(user) {
+                document.getElementById('userDisplay').textContent = user.role === 'guest' ? 'ضيف' : user.username;
+                document.getElementById('logoutBtnStore').onclick = logout;
+
+                const products = getProducts();
+                const container = document.getElementById('productsContainer');
+                container.innerHTML = '';
+                products.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-img">${product.image}</div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <p class="product-desc">${product.desc.substring(0, 50)}...</p>
+                            <div class="product-price">$${product.price}</div>
+                            <div class="product-actions">
+                                <button class="btn-add" data-id="${product.id}">➕ أضف إلى السلة</button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                // أحداث الإضافة
+                document.querySelectorAll('.btn-add').forEach(btn => {
+                    btn.onclick = (e) => {
+                        const id = parseInt(e.target.dataset.id);
+                        const product = products.find(p => p.id === id);
+                        if (product) {
+                            addToCart(product);
+                            showToast(`تمت إضافة ${product.name} إلى السلة`);
+                            updateCartUI();
+                        }
+                    };
+                });
+
+                // عناصر السلة
+                const cartIcon = document.getElementById('cartIconStore');
+                const cartModal = document.getElementById('cartModal');
+                const closeCart = document.getElementById('closeCart');
+                const cartItemsList = document.getElementById('cartItemsList');
+                const cartTotalSpan = document.getElementById('cartTotal');
+                const checkoutBtn = document.getElementById('checkoutBtn');
+
+                function updateCartUI() {
+                    const cart = getCart();
+                    cartItemsList.innerHTML = '';
+                    let total = 0;
+                    if (cart.length === 0) {
+                        cartItemsList.innerHTML = '<li style="text-align: center; color: var(--gray);">السلة فارغة</li>';
+                    } else {
+                        cart.forEach(item => {
+                            total += item.price * item.quantity;
+                            const li = document.createElement('li');
+                            li.className = 'cart-item';
+                            li.innerHTML = `
+                                <div class="cart-item-img">${item.image}</div>
+                                <div class="cart-item-info">
+                                    <div class="cart-item-title">${item.name}</div>
+                                    <div class="cart-item-price">$${item.price}</div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:0.5rem;">
+                                    <button class="decrease-qty" data-id="${item.id}">−</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="increase-qty" data-id="${item.id}">+</button>
+                                    <button class="remove-item" data-id="${item.id}">🗑️</button>
+                                </div>
+                            `;
+                            cartItemsList.appendChild(li);
+                        });
+                    }
+                    cartTotalSpan.textContent = `$${total.toFixed(2)}`;
+                    document.getElementById('cartCountStore').textContent = cart.reduce((acc, i) => acc + i.quantity, 0);
+
+                    // إعادة ربط الأحداث
+                    document.querySelectorAll('.decrease-qty').forEach(b => {
+                        b.onclick = (e) => {
+                            const id = parseInt(e.target.dataset.id);
+                            updateCartQuantity(id, -1);
+                            updateCartUI();
+                        };
+                    });
+                    document.querySelectorAll('.increase-qty').forEach(b => {
+                        b.onclick = (e) => {
+                            const id = parseInt(e.target.dataset.id);
+                            updateCartQuantity(id, 1);
+                            updateCartUI();
+                        };
+                    });
+                    document.querySelectorAll('.remove-item').forEach(b => {
+                        b.onclick = (e) => {
+                            const id = parseInt(e.target.dataset.id);
+                            removeFromCart(id);
+                            updateCartUI();
+                            showToast('تمت إزالة المنتج من السلة');
+                        };
+                    });
+                }
+
+                cartIcon.onclick = () => {
+                    updateCartUI();
+                    cartModal.classList.add('active');
+                };
+                closeCart.onclick = () => cartModal.classList.remove('active');
+                cartModal.onclick = (e) => { if (e.target === cartModal) cartModal.classList.remove('active'); };
+                checkoutBtn.onclick = () => {
+                    if (getCart().length === 0) {
+                        showToast('السلة فارغة', 'error');
+                        return;
+                    }
+                    alert('شكراً لتسوقك! (هذه واجهة تجريبية)');
+                    clearCart();
+                    updateCartUI();
+                    cartModal.classList.remove('active');
+                };
+
+                updateCartUI();
+            }
+
+        // ----- إعداد صفحة الأدمن -----
+            function setupAdminPage(user) {
+                document.getElementById('adminName').textContent = user.username;
+                document.getElementById('logoutBtnAdmin').onclick = logout;
+
+                // تبويبات
+                const tabLinks = document.querySelectorAll('.tab-link');
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabLinks.forEach(link => {
+                    link.onclick = () => {
+                        tabLinks.forEach(l => l.classList.remove('active'));
+                        tabContents.forEach(c => c.classList.remove('active'));
+                        link.classList.add('active');
+                        document.getElementById(link.dataset.tab + 'Tab').classList.add('active');
+                    };
+                });
+
+                // إدارة المنتجات
+                const productsTbody = document.getElementById('productsTableBody');
+                const addProductBtn = document.getElementById('addProductBtn');
+                const productModal = document.getElementById('productModal');
+                const closeProductModal = document.getElementById('closeProductModal');
+                const productForm = document.getElementById('productForm');
+                const productModalTitle = document.getElementById('productModalTitle');
+                const productId = document.getElementById('productId');
+                const productName = document.getElementById('productName');
+                const productPrice = document.getElementById('productPrice');
+                const productDesc = document.getElementById('productDesc');
+                const productImage = document.getElementById('productImage');
+                const productFeatured = document.getElementById('productFeatured');
+
+                function renderProducts() {
+                    const products = getProducts();
+                    productsTbody.innerHTML = '';
+                    products.forEach(p => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${p.id}</td>
+                            <td>${p.image}</td>
+                            <td>${p.name}</td>
+                            <td>$${p.price}</td>
+                            <td>${p.desc.substring(0,30)}...</td>
+                            <td>
+                                <button class="action-btn edit" data-id="${p.id}">✏️</button>
+                                <button class="action-btn delete" data-id="${p.id}">🗑️</button>
+                            </td>
+                        `;
+                        productsTbody.appendChild(tr);
+                    });
+                    // أحداث التعديل والحذف
+                    document.querySelectorAll('.edit').forEach(b => {
+                        b.onclick = (e) => {
+                            const id = parseInt(e.target.dataset.id);
+                            const p = products.find(p => p.id === id);
+                            if (p) {
+                                productId.value = p.id;
+                                productName.value = p.name;
+                                productPrice.value = p.price;
+                                productDesc.value = p.desc;
+                                productImage.value = p.image;
+                                productFeatured.checked = p.featured || false;
+                                productModalTitle.textContent = 'تعديل منتج';
+                                productModal.classList.add('active');
+                            }
+                        };
+                    });
+                    document.querySelectorAll('.delete').forEach(b => {
+                        b.onclick = (e) => {
+                            const id = parseInt(e.target.dataset.id);
+                            if (confirm('هل أنت متأكد من الحذف؟')) {
+                                deleteProduct(id);
+                                renderProducts();
+                                showToast('تم حذف المنتج');
+                            }
+                        };
+                    });
+                }
+
+                addProductBtn.onclick = () => {
+                    productId.value = '';
+                    productForm.reset();
+                    productFeatured.checked = false;
+                    productModalTitle.textContent = 'إضافة منتج';
+                    productModal.classList.add('active');
+                };
+                closeProductModal.onclick = () => productModal.classList.remove('active');
+                productModal.onclick = (e) => { if (e.target === productModal) productModal.classList.remove('active'); };
+                productForm.onsubmit = (e) => {
+                    e.preventDefault();
+                    const productData = {
+                        id: productId.value ? parseInt(productId.value) : null,
+                        name: productName.value.trim(),
+                        price: parseFloat(productPrice.value),
+                        desc: productDesc.value.trim(),
+                        image: productImage.value.trim(),
+                        featured: productFeatured.checked
+                    };
+                    if (productData.id) {
+                        updateProduct(productData);
+                        showToast('تم تحديث المنتج');
+                    } else {
+                        addProduct(productData);
+                        showToast('تمت إضافة المنتج');
+                    }
+                    renderProducts();
+                    productModal.classList.remove('active');
+                };
+
+                // إدارة المستخدمين
+                const usersTbody = document.getElementById('usersTableBody');
+                const addUserBtn = document.getElementById('addUserBtn');
+                const userModal = document.getElementById('userModal');
+                const closeUserModal = document.getElementById('closeUserModal');
+                const userForm = document.getElementById('userForm');
+                const userModalTitle = document.getElementById('userModalTitle');
+                const userIdField = document.getElementById('userId');
+                const usernameField = document.getElementById('username2');
+                const passwordField = document.getElementById('password2');
+                const roleField = document.getElementById('role');
+
+                function renderUsers() {
+                    const users = getUsers();
+                    usersTbody.innerHTML = '';
+                    users.forEach(u => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${u.id}</td>
+                            <td>${u.username}</td>
+                            <td>${u.role}</td>
+                            <td>
+                                <button class="action-btn edit-user" data-id="${u.id}">✏️</button>
+                                <button class="action-btn delete-user" data-id="${u.id}">🗑️</button>
+                            </td>
+                        `;
+                        usersTbody.appendChild(tr);
+                    });
+                    document.querySelectorAll('.edit-user').forEach(b => {
+                        b.onclick = (e) => {
+                            const id = parseInt(e.target.dataset.id);
+                            const u = users.find(u => u.id === id);
+                            if (u) {
+                                userIdField.value = u.id;
+                                usernameField.value = u.username;
+                                passwordField.value = u.password;
+                                roleField.value = u.role;
+                                userModalTitle.textContent = 'تعديل مستخدم';
+                                userModal.classList.add('active');
+                            }
+                        };
+                    });
+                    document.querySelectorAll('.delete-user').forEach(b => {
+                        b.onclick = (e) => {
+                            const id = parseInt(e.target.dataset.id);
+                            if (id === 1) {
+                                showToast('لا يمكن حذف الأدمن الرئيسي', 'error');
+                                return;
+                            }
+                            if (confirm('هل أنت متأكد من الحذف؟')) {
+                                deleteUser(id);
+                                renderUsers();
+                                showToast('تم حذف المستخدم');
+                            }
+                        };
+                    });
+                }
+
+                addUserBtn.onclick = () => {
+                    userIdField.value = '';
+                    userForm.reset();
+                    roleField.value = 'editor';
+                    userModalTitle.textContent = 'إضافة مستخدم';
+                    userModal.classList.add('active');
+                };
+                closeUserModal.onclick = () => userModal.classList.remove('active');
+                userModal.onclick = (e) => { if (e.target === userModal) userModal.classList.remove('active'); };
+                userForm.onsubmit = (e) => {
+                    e.preventDefault();
+                    const userData = {
+                        id: userIdField.value ? parseInt(userIdField.value) : null,
+                        username: usernameField.value.trim(),
+                        password: passwordField.value.trim(),
+                        role: roleField.value
+                    };
+                    if (userData.id) {
+                        updateUser(userData);
+                        showToast('تم تحديث المستخدم');
+                    } else {
+                        addUser(userData);
+                        showToast('تمت إضافة المستخدم');
+                    }
+                    renderUsers();
+                    userModal.classList.remove('active');
+                };
+
+                renderProducts();
+                renderUsers();
+            }
+
+            // ----- بدء التطبيق -----
+            renderApp();
+        })();
+    </script>
+</body>
+</html>
